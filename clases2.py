@@ -131,21 +131,21 @@ class PatientData:
                 self.gender=_gender
 
     def  setBirthday(self,_birthday):
-                self.gender=_birthday
+                self.birthday=_birthday
     def  setRace(self,_race):
-                self.gender=_race
+                self.race=_race
     def  setHeight(self,_height):
-                self.gender=_height
+                self.height=_height
     def  setWeight(self,_weight):
-                self.gender=_weight
+                self.weight=_weight
     def  setAge(self,_age):
-                self.gender=_age
+                self.age=_age
     def  setPhone(self,_phone):
-                self.gender=_phone
+                self.phone=_phone
     def  setMedications(self,_medications):
-                self.gender=_medications
+                self.medications=_medications
     def  setReferringPhys(self,_referringPhys):
-                self.gender=_referringPhys
+                self.referringPhys=_referringPhys
     def  setInterprettingPhys(self,_interprettingPhys):
                 self.interprettingPhys=_interprettingPhys
     def  setComments(self,_comments):
@@ -222,7 +222,7 @@ class PatientData:
 
 class ExtraInfo:
     def __init__(self):
-                print('Nombre ExtraInfo:') 
+        #        print('Nombre ExtraInfo:') 
                 self.enumDeviceType=1
                 self.enumRemote=1
                 self.enumDevKey=1
@@ -286,7 +286,7 @@ class ExtraInfo:
 
 class Abpm:
     def __init__(self):
-                print('Nombre Abpm:') 
+   #             print('Nombre Abpm:') 
                 self.yearBegin=1
                 self.monBegin=1
                 self.dayBegin=1
@@ -308,34 +308,56 @@ class Abpm:
 
 class Maquina:
     def __init__(self):
-        print('Nombre Maquina:') 
+       #       print('Nombre Maquina:') 
         self.patientData = PatientData()
         self.extraInfo   = ExtraInfo()
         self.abpmdata    = Abpm()
         self.datosLeidoDeLaMaquina=[]
+        self.comentarioLeidoDeLaMaquina=[]
     
     def agregarDatosDeLaMaquina(self,s):
             if s[1:2]== "=":
                 self.datosLeidoDeLaMaquina.append(s)
-    
+    def agregarComentarioDeLaMaquina(self,s):
+                if s[0:1]== "C" and s[2:3]== "="  :
+                    ss = s.split("=")
+                    sss=ss[1]
+                    self.comentarioLeidoDeLaMaquina.append(sss)
+
     def printDatosLeidosDeLaMaquina(self):
         i = 1
         s=self.datosLeidoDeLaMaquina[0]
+        c=self.comentarioLeidoDeLaMaquina[0]
+        ano = str(int(s[2:6],16))
+        mes = "0"+ str(int(s[6:8],16))
+        dia = "0"+ str(int(s[8:10],16))
+        diaActual        = ano+"/"+mes[0:2]+"/"+dia[0:2]
         systole     = str(int(s[18:20],16)) 
         diastole    = str(int(s[22:24],16))
         fr          = str(int(s[30:32],16))
         pam         = str(int(s[26:28],16))
         hora        = str(int(s[10:12],16))+":"+str(int(s[12:14],16))
-        a="2022/02/05 " + hora + "," + systole + "," + diastole + "," + fr + "," + pam + "," + "0" + "," + '"'+ "comemntario" + '"##'
+
+        a=diaActual + " " + hora + "," + systole + "," + diastole + "," + fr + "," + pam + "," +"9"+'"'+ c[0:len(c)-1] + '"'+'##'
         s="[data]"+'\n'+"valor1="+a
         while i < len(self.datosLeidoDeLaMaquina):
             ss=self.datosLeidoDeLaMaquina[i]
+            cc=self.comentarioLeidoDeLaMaquina[i]
+
             systole     = str(int(ss[18:20],16)) 
             diastole    = str(int(ss[22:24],16))
             fr          = str(int(ss[30:32],16))
             pam         = str(int(ss[26:28],16))
+
+            ano = str(int(ss[2:6],16))
+            mes = "0"+ str(int(ss[6:8],16))
+            dia = "0"+ str(int(ss[8:10],16))
+
+            diaActual   = ano+"/"+mes[0:2]+"/"+dia[0:2]
             hora        = str(int(ss[10:12],16))+":"+str(int(ss[12:14],16))
-            a="2022/02/05 " + hora + "," + systole + "," + diastole + "," + fr + "," + pam + "," + "0" + "," + '"'+ "comemntario" + '"##'
+            print(cc[0:len(cc)-1])
+            a = diaActual + " " + hora + "," + systole + "," + diastole + "," + fr + "," + pam + "," +"9"+'"'+ cc[0:len(cc)-1] + '"'+'##'
+
             s=s+a
             i += 1
         
@@ -357,109 +379,110 @@ class Maquina:
             if s.find("SecBegin") != -1:
                 self.abpmdata.setSecBegin(s)
     def agregarPatientData(self,s):
+            aux=s.split("=")
             if s.find("ABPMCount") != -1:
-                self.patientData.setABPMCount(s)
+                self.patientData.setABPMCount(aux[1])
             if s.find("Name") != -1:
-                self.patientData.setName(s)
+                self.patientData.setName(aux[1])
             if s.find("ID") != -1:
-                self.patientData.setId(s)
+                self.patientData.setId(aux[1])
             if s.find("YearBegin") != -1:
-                self.patientData.setYearBegin(s)
+                self.patientData.setYearBegin(aux[1])
             if s.find("DayBegin") != -1:
-                self.patientData.setDayBegin(s)
+                self.patientData.setDayBegin(aux[1])
             if s.find("HourBegin") != -1:
-                self.patientData.setHourBegin(s)
+                self.patientData.setHourBegin(aux[1])
             if s.find("MinBegin") != -1:
-                self.patientData.setMinBegin(s)
+                self.patientData.setMinBegin(aux[1])
             if s.find("SecBegin") != -1:
-                self.patientData.setSecBegin(s)
+                self.patientData.setSecBegin(aux[1])
  
             if s.find("MaxPressValue") != -1:
-                self.patientData.setMaxPressValue(s)
+                self.patientData.setMaxPressValue(aux[1])
             if s.find("AwakeWarnOnOff") != -1:
-                self.patientData.setAwakeWarnOnOff(s)
+                self.patientData.setAwakeWarnOnOff(aux[1])
             if s.find("AwakeSysMaxValue") != -1:
-                self.patientData.setAwakeSysMaxValue(s)
+                self.patientData.setAwakeSysMaxValue(aux[1])
             if s.find("AwakeSysMinValue") != -1:
-                self.patientData.setAwakeSysMinValue(s)
+                self.patientData.setAwakeSysMinValue(aux[1])
             if s.find("AwakeDiaMaxValue") != -1:
-                self.patientData.setAwakeDiaMaxValue(s)
+                self.patientData.setAwakeDiaMaxValue(aux[1])
             if s.find("AwakeDiaMinValue") != -1:
-                self.patientData.setAwakeDiaMinValue(s)
+                self.patientData.setAwakeDiaMinValue(aux[1])
             if s.find("AsleepWarnOnOff") != -1:
-                self.patientData.setAsleepWarnOnOff(s)
+                self.patientData.setAsleepWarnOnOff(aux[1])
             if s.find("AsleepSysMaxValue") != -1:
-                self.patientData.setAsleepSysMaxValue(s)
+                self.patientData.setAsleepSysMaxValue(aux[1])
  
             if s.find("AsleepSysMinValue") != -1:
-                self.patientData.setAsleepSysMinValue(s)
+                self.patientData.setAsleepSysMinValue(aux[1])
             if s.find("AsleepDiaMaxValue") != -1:
-                self.patientData.setAsleepDiaMaxValue(s)
+                self.patientData.setAsleepDiaMaxValue(aux[1])
             if s.find("AsleepDiaMinValue") != -1:
-                self.patientData.setAsleepDiaMinValue(s)
+                self.patientData.setAsleepDiaMinValue(aux[1])
             if s.find("Display") != -1:
-                self.patientData.setDisplay(s)
+                self.patientData.setDisplay(aux[1])
             if s.find("StartKey") != -1:
-                self.patientData.setStartKey(s)
+                self.patientData.setStartKey(aux[1])
             if s.find("AwakeHour") != -1:
-                self.patientData.setAwakeHour(s)
+                self.patientData.setAwakeHour(aux[1])
             if s.find("AwakeMin") != -1:
-                self.patientData.setAwakeMin(s)
+                self.patientData.setAwakeMin(aux[1])
             if s.find("AwakeDuration") != -1:
-                self.patientData.setAwakeDuration(s)
+                self.patientData.setAwakeDuration(aux[1])
             if s.find("AsleepHour") != -1:
-                self.patientData.setAsleepHour(s)
+                self.patientData.setAsleepHour(aux[1])
             if s.find("AsleepMin") != -1:
-                self.patientData.setAsleepMin(s)
+                self.patientData.setAsleepMin(aux[1])
             if s.find("AsleepDuration") != -1:
-                self.patientData.setAsleepDuration(s)
+                self.patientData.setAsleepDuration(aux[1])
             if s.find("SpecialHourStart") != -1:
-                self.patientData.setSpecialHourStart(s)
+                self.patientData.setSpecialHourStart(aux[1])
             if s.find("SpecialDuration") != -1:
-                self.patientData.setSpecialDuration(s)
+                self.patientData.setSpecialDuration(aux[1])
             if s.find("SpecialDuration") != -1:
-                self.patientData.setSpecialDuration(s)
+                self.patientData.setSpecialDuration(aux[1])
             if s.find("SpecialHourEnd") != -1:
-                self.patientData.setSpecialHourEnd(s)
+                self.patientData.setSpecialHourEnd(aux[1])
             if s.find("SpecialMinEnd") != -1:
-                self.patientData.setSpecialMinEnd(s)
+                self.patientData.setSpecialMinEnd(aux[1])
             if s.find("Addr") != -1:
-                self.patientData.setAddr(s)
+                self.patientData.setAddr(aux[1])
             if s.find("Gender") != -1:
-                self.patientData.setGender(s)
+                self.patientData.setGender(aux[1])
             if s.find("Birthday") != -1:
-                self.patientData.setBirthday(s)
+                self.patientData.setBirthday(aux[1])
             if s.find("Race") != -1:
-                self.patientData.setRace(s)
+                self.patientData.setRace(aux[1])
             if s.find("Height") != -1:
-                self.patientData.setHeight(s)
+                self.patientData.setHeight(aux[1])
             if s.find("Weight") != -1:
-                self.patientData.setWeight(s)
+                self.patientData.setWeight(aux[1])
             if s.find("Age") != -1:
-                self.patientData.setAge(s)
+                self.patientData.setAge(aux[1])
             if s.find("Phone") != -1:
-                self.patientData.setPhone(s)
+                self.patientData.setPhone(aux[1])
             if s.find("Medications") != -1:
-                self.patientData.setMedications(s)
+                self.patientData.setMedications(aux[1])
             if s.find("ReferringPhys") != -1:
-                self.patientData.setReferringPhys(s)
+                self.patientData.setReferringPhys(aux[1])
             if s.find("InterprettingPhys") != -1:
-                self.patientData.setInterprettingPhys(s)
+                self.patientData.setInterprettingPhys(aux[1])
             if s.find("Comments") != -1:
-                self.patientData.setComments(s)
+                self.patientData.setComments(aux[1])
             if s.find("ClinicalInterp") != -1:
-                self.patientData.setClinicalInterp(s)
+                self.patientData.setClinicalInterp(aux[1])
  
             if s.find("OutpatientNo") != -1:
-                self.patientData.setOutpatientNo(s)
+                self.patientData.setOutpatientNo(aux[1])
             if s.find("AdmissionNo") != -1:
-                self.patientData.setAdmissionNo(s)
+                self.patientData.setAdmissionNo(aux[1])
             if s.find("BedNo") != -1:
-                self.patientData.setBedNo(s)
+                self.patientData.setBedNo(aux[1])
             if s.find("DepartmentNo") != -1:
-                self.patientData.setDepartmentNo(s)
+                self.patientData.setDepartmentNo(aux[1])
             if s.find("Email") != -1:
-                self.patientData.setEmail(s)
+                self.patientData.setEmail(aux[1])
     def agregarExtraInfo(self,s):
             if s.find("enumDeviceType") != -1:
                 self.extraInfo.setEnumDeviceType(s)

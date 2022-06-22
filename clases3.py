@@ -1,29 +1,79 @@
 class Clinicos:
     def __init__(self):
-        print('Nombre Clinicos:') 
-
+ #        print('Nombre Clinicos:') 
+         self.s =""
+    def print (self):
+            s="[Clinicos]"+'\n'
+            s=s+"Antecedentes=."+'\n'
+            s=s+"Sintomas=."+'\n'
+            return s
 class Medicotratante:
     def __init__(self):
-        print('Nombre Medicotratante:') 
+ #       print('Nombre Medicotratante:') 
+         self.s =""
+    def print (self):
+            s="[Medico tratante]"+'\n'
+            s=s+"NombreMedico=."+'\n'
+            return s
 class Medicaciones:
     def __init__(self):
-        print('Nombre Medicaciones:') 
+ #        print('Nombre Medicaciones:') 
+         self.s =""
+    def print (self):
+            s="[Medicaciones]"+'\n'
+            s=s+"Medicaciones=."+'\n'
+            return s
 class Sueno:
     def __init__(self):
-        print('Nombre Sueno:') 
+ #       print('Nombre Sueno:') 
+         self.s =""
+    def print (self):
+            s="[Sueno]"+'\n'
+            s=s+"SeAcosto=."+'\n'
+            s=s+"SeDurmio=."+'\n'
+            s=s+"SeDesperto=."+'\n'
+            s=s+"SeLevanto=."+'\n'
+            s=s+"ComoDurmio=."+'\n'
+            return s
 class Comidas:
     def __init__(self):
-        print('Nombre Comidas:') 
+ #       print('Nombre Comidas:') 
+         self.s =""
+    def print (self):
+            s="[Comidas]"+'\n'
+            s=s+"Desayuno=."+'\n'
+            s=s+"Almuerzo=."+'\n'
+            s=s+"Once=."+'\n'
+            s=s+"Cena=."+'\n'
+            return s
 class Trabajo:
     def __init__(self):
-        print('Nombre Trabajo:') 
+ #        print('Nombre Trabajo:') 
+         self.s =""
+    def print (self):
+            s="[Trabajo]"+'\n'
+            s=s+"TrabajoInicio=."+'\n'
+            s=s+"TrabajoFin=."+'\n'
+            return s
 class Observaciones:
     def __init__(self):
-        print('Nombre Observaciones:') 
-
+ #       print('Nombre Observaciones:') 
+         self.s =""
+    def print (self):
+            s="[Observaciones]"+'\n'
+            s=s+"Observaciones=."+'\n'
+            return s
+class DatosDeLaMaquina:
+    def __init__(self):
+ #               print('Nombre DatosDeLaMaquina:') 
+                self.datos=[]
+    def print (self):
+            s="[Observaciones]"+'\n'
+            s=s+"Observaciones=."+'\n'
+            return s
 class Persona:
     def __init__(self,_mac):
-                print('Nombre Persona:') 
+ #               print('Nombre Persona:') 
                 self.tipo="."
                 self.id="."
                 self.tipoId="."
@@ -44,7 +94,9 @@ class Persona:
                 
  
     def setTipo(self,_tipo):
-                self.tipo=_tipo
+                self.tipo=_tipo    
+    def setRut(self,_rut):
+                self.rut=_rut
     def setId(self,_id):
                 self.id=_id
     def setNombre(self,_nombre):
@@ -73,5 +125,5 @@ class Persona:
             s=s+"Mail="+self.mail+'\n'
             s=s+"FechaNacimiento="+self.fechaNacimiento+'\n'
             s=s+"Sexo="+self.sexo+'\n'
-            s=s+"MAC="+self.mac+"."+'\n'
+            s=s+"MAC="+self.mac+'\n'
             return s
